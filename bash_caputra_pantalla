@@ -1,0 +1,26 @@
+# Author : Eduardo Esteves - copilotlabxgmail.com
+# Perú-2024
+#!/bin/bash
+
+# Verifica si el dispositivo está conectado
+device=$(adb devices | grep -w "device")
+if [ -z "$device" ]; then
+  echo "No se detecta ningún dispositivo. Asegúrate de que la depuración USB esté habilitada y el dispositivo esté conectado."
+  exit 1
+fi
+
+# Captura la pantalla del dispositivo Android
+adb shell screencap -p /sdcard/screen.png
+
+# Espera un momento para asegurarse de que la captura de pantalla se haya realizado
+sleep 2
+
+# Copia la captura de pantalla a la máquina local
+adb pull /sdcard/screen.png
+
+# Elimina la captura de pantalla del dispositivo Android
+adb shell rm /sdcard/screen.png
+
+echo "Captura de pantalla guardada como screen.png en el directorio actual."
+
+
